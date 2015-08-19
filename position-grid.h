@@ -32,6 +32,7 @@ G_BEGIN_DECLS
 
 typedef struct _PositionGrid PositionGrid;
 typedef struct _PositionGridClass PositionGridClass;
+typedef struct _PositionGridChild PositionGridChild;
 
 struct _PositionGrid
 {
@@ -40,6 +41,8 @@ struct _PositionGrid
 	#else
 	GtkTable parent;
 	#endif
+	
+	GList *children;
 };
 
 
@@ -53,10 +56,17 @@ struct _PositionGridClass
 	#endif
 };
 
+struct _PositionGridChild
+{
+	GtkTableChild *child;
+	
+	guint position;
+};
+
 GType position_grid_get_type (void);
 GtkWidget* position_grid_new (guint rows, guint columns, gboolean homogeneous);
 
-
+void position_grid_attach (PositionGrid *position_grid, GtkWidget *widget, guint position);
 
 
 G_END_DECLS
