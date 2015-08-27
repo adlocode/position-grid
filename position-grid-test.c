@@ -8,6 +8,11 @@ static void clicked (GtkButton *button, GtkWidget *grid)
 	position_grid_resize (POSITION_GRID(grid), 4, 8);	
 }
 
+static void clicked2 (GtkButton *button, GtkWidget *grid)
+{
+
+	position_grid_resize (POSITION_GRID(grid), 5, 2);	
+}
 
 int main (int argc, char *argv[])
 {
@@ -47,6 +52,13 @@ int main (int argc, char *argv[])
 	g_signal_connect (GTK_BUTTON (button), "clicked", G_CALLBACK (clicked), grid);
 					
 	gtk_box_pack_start (GTK_BOX (hbox), pager, FALSE, FALSE, 0);
+	
+	button= gtk_button_new_with_label ("resize 2");
+	
+	position_grid_attach (POSITION_GRID(grid), button, 10);	
+	
+	g_signal_connect (GTK_BUTTON (button), "clicked", G_CALLBACK (clicked2), grid);
+					
 	
 		//gtk_container_remove (GTK_CONTAINER (grid),
 		//button);

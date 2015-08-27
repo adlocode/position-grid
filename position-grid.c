@@ -171,15 +171,29 @@ void position_grid_resize (PositionGrid *position_grid, guint rows, guint column
 			{
 					position_grid_child = (PositionGridChild *)li->data;
 				
+					g_object_ref (position_grid_child->widget);	
 					
-					
+				gtk_container_remove (GTK_CONTAINER (position_grid),
+					position_grid_child->widget);
 
-					
-					position_grid_reattach (position_grid, position_grid_child, 
+			}		
+
+					gtk_table_resize (GTK_TABLE(position_grid), rows, columns);
+			
+			
+			for (li = position_grid->children; li != NULL; li = li->next)
+			{		
+				position_grid_child = (PositionGridChild *)li->data;
+				position_grid_reattach (position_grid, position_grid_child, 
 						position_grid_child->position);
+				
+				g_object_unref (position_grid_child->widget);
+			}
 						
 					
-				}
+				
+				
+	
 }
 
 void position_grid_reattach (PositionGrid *position_grid, PositionGridChild *child, guint position)
@@ -187,13 +201,7 @@ void position_grid_reattach (PositionGrid *position_grid, PositionGridChild *chi
 	GtkTable *table;
 	guint column_number, row_number;
 	
-	child->reattach = TRUE;
 	
-	g_object_ref (child->widget);	
-					
-	gtk_container_remove (GTK_CONTAINER (position_grid),
-		child->widget);
-
 	
 	table = GTK_TABLE (position_grid);
 	
@@ -205,9 +213,7 @@ void position_grid_reattach (PositionGrid *position_grid, PositionGridChild *chi
 	gtk_table_attach_defaults (GTK_TABLE (position_grid), child->widget, column_number -1,
 		column_number, row_number - 1, row_number);
 		
-	g_object_unref (child->widget);
 	
-	child->reattach = FALSE;	
 	
 }
 
