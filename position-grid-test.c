@@ -40,7 +40,7 @@ int main (int argc, char *argv[])
 	
 	position_grid_attach (POSITION_GRID(grid), button, 1);
 	
-	button= gtk_button_new ();
+	button= gtk_button_new_with_label ("resize");
 	
 	position_grid_attach (POSITION_GRID(grid), button, 8);	
 	
@@ -48,8 +48,8 @@ int main (int argc, char *argv[])
 					
 	gtk_box_pack_start (GTK_BOX (hbox), pager, FALSE, FALSE, 0);
 	
-		gtk_container_remove (GTK_CONTAINER (grid),
-		button);
+		//gtk_container_remove (GTK_CONTAINER (grid),
+		//button);
 	
 	
 

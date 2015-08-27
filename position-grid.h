@@ -58,9 +58,13 @@ struct _PositionGridClass
 
 struct _PositionGridChild
 {
-	GtkTableChild *child;
+	//GtkTableChild *child;
+	
+	GtkWidget *widget;
 	
 	guint position;
+	
+	gboolean reattach;
 };
 
 GType position_grid_get_type (void);
