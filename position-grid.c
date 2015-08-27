@@ -31,6 +31,8 @@ void position_grid_resize (PositionGrid *position_grid, guint rows, guint column
 
 void position_grid_reattach (PositionGrid *position_grid, PositionGridChild *child, guint position);
 
+void _position_grid_attach_internal (PositionGrid *position_grid, GtkWidget *widget, guint position);
+
 PositionGridChild * position_grid_get_child 
 	(PositionGrid *position_grid, GtkWidget *widget);
 
@@ -198,30 +200,29 @@ void position_grid_resize (PositionGrid *position_grid, guint rows, guint column
 
 void position_grid_reattach (PositionGrid *position_grid, PositionGridChild *child, guint position)
 {
+	
+	_position_grid_attach_internal (position_grid, child->widget, position);
+	
+}
+void _position_grid_attach_internal (PositionGrid *position_grid, GtkWidget *widget, guint position)
+{
 	GtkTable *table;
 	guint column_number, row_number;
-	
-	
 	
 	table = GTK_TABLE (position_grid);
 	
 	row_number = ceil ((double)position/(double)table->ncols);
 	
 	column_number = position - ((row_number -1) * table->ncols);
-
 	
-	gtk_table_attach_defaults (GTK_TABLE (position_grid), child->widget, column_number -1,
+	gtk_table_attach_defaults (GTK_TABLE (position_grid), widget, column_number -1,
 		column_number, row_number - 1, row_number);
-		
-	
-	
 }
-
+	
 void position_grid_attach (PositionGrid *position_grid, GtkWidget *widget, guint position)
 {
 	PositionGridChild * position_grid_child;
-	GtkTable *table;
-	guint column_number, row_number;
+
 	
 	position_grid_child = g_new (PositionGridChild, 1);
 	
@@ -231,16 +232,7 @@ void position_grid_attach (PositionGrid *position_grid, GtkWidget *widget, guint
 	
 	position_grid_child->reattach = FALSE;
 	
-	
-	table = GTK_TABLE (position_grid);
-	
-	row_number = ceil ((double)position/(double)table->ncols);
-	
-	column_number = position - ((row_number -1) * table->ncols);
-	
-	
-	gtk_table_attach_defaults (GTK_TABLE (position_grid), widget, column_number -1,
-		column_number, row_number - 1, row_number);
+	_position_grid_attach_internal (position_grid, widget, position);
 	
 	g_signal_connect (GTK_OBJECT (widget), "destroy", G_CALLBACK (position_grid_remove), position_grid); 
 	
