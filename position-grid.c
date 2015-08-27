@@ -24,19 +24,12 @@ static void position_grid_class_init (PositionGridClass *klass);
 
 static void position_grid_init (PositionGrid *grid);
 
-static void gtk_table_get_child_property (GtkContainer *container,
-	GtkWidget *child, guint property_id, const GValue *value,
-	GParamSpec *pspec);	
-void position_grid_resize (PositionGrid *position_grid, guint rows, guint columns);
-
 void position_grid_reattach (PositionGrid *position_grid, PositionGridChild *child, guint position);
 
 void _position_grid_attach_internal (PositionGrid *position_grid, GtkWidget *widget, guint position);
 
 PositionGridChild * position_grid_get_child 
 	(PositionGrid *position_grid, GtkWidget *widget);
-
-
 
 
 
@@ -149,7 +142,7 @@ GtkWidget* position_grid_new (guint rows, guint columns, gboolean homogeneous)
 		columns = 1;
 		
 	
-	position_grid = (g_object_new (position_grid_get_type (), NULL));
+	position_grid = g_object_new (position_grid_get_type (), NULL);
 	
 	
 	GTK_TABLE  (position_grid)->homogeneous = (homogeneous ? TRUE : FALSE);
@@ -171,21 +164,22 @@ void position_grid_resize (PositionGrid *position_grid, guint rows, guint column
 	
 	for (li = position_grid->children; li != NULL; li = li->next)
 			{
-					position_grid_child = (PositionGridChild *)li->data;
+				position_grid_child = (PositionGridChild *)li->data;
 				
-					g_object_ref (position_grid_child->widget);	
+				g_object_ref (position_grid_child->widget);	
 					
 				gtk_container_remove (GTK_CONTAINER (position_grid),
 					position_grid_child->widget);
 
 			}		
 
-					gtk_table_resize (GTK_TABLE(position_grid), rows, columns);
+			gtk_table_resize (GTK_TABLE(position_grid), rows, columns);
 			
 			
 			for (li = position_grid->children; li != NULL; li = li->next)
 			{		
 				position_grid_child = (PositionGridChild *)li->data;
+				
 				position_grid_reattach (position_grid, position_grid_child, 
 						position_grid_child->position);
 				
