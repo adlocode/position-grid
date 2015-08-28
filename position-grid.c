@@ -74,8 +74,6 @@ static void position_grid_remove (GtkObject *object, PositionGrid *grid)
 			{
 				child = li->data;
 				
-				g_print ("%s", "test ");
-				
 				if (child->widget == widget)
 				{	
 					g_print ("%s", "remove ");
