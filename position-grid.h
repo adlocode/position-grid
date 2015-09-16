@@ -57,14 +57,10 @@ struct _PositionGridClass
 };
 
 struct _PositionGridChild
-{
-	//GtkTableChild *child;
-	
+{	
 	GtkWidget *widget;
 	
 	guint position;
-	
-	gboolean reattach;
 };
 
 GType position_grid_get_type (void);
@@ -75,4 +71,4 @@ void position_grid_resize (PositionGrid *position_grid, guint rows, guint column
 
 G_END_DECLS
 
-#endif /*__MY_TASKLIST_H__*/
+#endif

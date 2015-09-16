@@ -52,6 +52,10 @@ int main (int argc, char *argv[])
 	position_grid_attach (POSITION_GRID(grid), button, 10);	
 	
 	g_signal_connect (GTK_BUTTON (button), "clicked", G_CALLBACK (clicked2), grid);
+	
+	button= gtk_button_new ();
+	
+	position_grid_attach (POSITION_GRID(grid), button, 11);
 					
 	
 		//gtk_container_remove (GTK_CONTAINER (grid),

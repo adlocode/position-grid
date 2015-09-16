@@ -104,28 +104,6 @@ static void position_grid_init (PositionGrid *grid)
           
 
 }
-/*
-void position_grid_get_table_child 
-	(PositionGrid *position_grid, PositionGridChild *position_grid_child, GtkWidget *widget)
-{
-	GList *li;
-	GtkTableChild  *table_child;
-	
-	for (li = GTK_TABLE (position_grid)->children; li != NULL; li = li->next)
-			{
-				table_child = (GtkTableChild*) li->data;
-
-				if (table_child->widget == widget)
-				{
-					position_grid_child->child = (GtkTableChild*) table_child;
-					
-					break;
-				}
-				
-			}
-}*/
-
-
 
 GtkWidget* position_grid_new (guint rows, guint columns, gboolean homogeneous)
 {
@@ -153,10 +131,13 @@ GtkWidget* position_grid_new (guint rows, guint columns, gboolean homogeneous)
 void position_grid_resize (PositionGrid *position_grid, guint rows, guint columns)
 {
 	GList *li;
-	
 	PositionGridChild *position_grid_child;
 	
-	gtk_table_resize (GTK_TABLE(position_grid), rows, columns);
+	if (rows == 0)
+		rows = 1;
+		
+	if (columns == 0)
+		columns = 1;
 	
 	for (li = position_grid->children; li != NULL; li = li->next)
 			{
@@ -220,11 +201,9 @@ void position_grid_attach (PositionGrid *position_grid, GtkWidget *widget, guint
 	
 	position_grid_child->position = position;
 	
-	position_grid_child->reattach = FALSE;
-	
 	_position_grid_attach_internal (position_grid, widget, position);
 	
-	g_signal_connect (GTK_OBJECT (widget), "destroy", G_CALLBACK (position_grid_remove), position_grid); 
+	g_signal_connect (G_OBJECT (widget), "destroy", G_CALLBACK (position_grid_remove), position_grid); 
 	
 	position_grid->children = g_list_prepend (position_grid->children, position_grid_child);
 	
