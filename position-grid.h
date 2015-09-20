@@ -43,6 +43,8 @@ struct _PositionGrid
 	#endif
 	
 	GList *children;
+	
+	guint previous_position;
 };
 
 
@@ -67,6 +69,7 @@ GType position_grid_get_type (void);
 GtkWidget* position_grid_new (guint rows, guint columns, gboolean homogeneous);
 
 void position_grid_attach (PositionGrid *position_grid, GtkWidget *widget, guint position);
+void position_grid_attach_next (PositionGrid *position_grid, GtkWidget *widget);
 void position_grid_resize (PositionGrid *position_grid, guint rows, guint columns);
 
 G_END_DECLS

@@ -100,8 +100,7 @@ static void position_grid_init (PositionGrid *grid)
 {
 	
   grid->children = NULL;
-  
-          
+  grid->previous_position = 0; 
 
 }
 
@@ -188,6 +187,7 @@ void _position_grid_attach_internal (PositionGrid *position_grid, GtkWidget *wid
 	
 	gtk_table_attach_defaults (GTK_TABLE (position_grid), widget, column_number -1,
 		column_number, row_number - 1, row_number);
+	
 }
 	
 void position_grid_attach (PositionGrid *position_grid, GtkWidget *widget, guint position)
@@ -207,7 +207,14 @@ void position_grid_attach (PositionGrid *position_grid, GtkWidget *widget, guint
 	
 	position_grid->children = g_list_prepend (position_grid->children, position_grid_child);
 	
+	position_grid->previous_position = position;
 	
+	
+}
+
+void position_grid_attach_next (PositionGrid *position_grid, GtkWidget *widget)
+{
+	position_grid_attach (position_grid, widget, position_grid->previous_position + 1);
 }
 	
 

@@ -56,6 +56,14 @@ int main (int argc, char *argv[])
 	button= gtk_button_new ();
 	
 	position_grid_attach (POSITION_GRID(grid), button, 11);
+	
+	button= gtk_button_new ();
+	
+	position_grid_attach_next (POSITION_GRID(grid), button);
+	
+	button= gtk_button_new ();
+	
+	position_grid_attach_next (POSITION_GRID(grid), button);
 					
 	
 		//gtk_container_remove (GTK_CONTAINER (grid),
